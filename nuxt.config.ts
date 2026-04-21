@@ -2,7 +2,7 @@ import svgLoader from "vite-svg-loader";
 
 export default defineNuxtConfig({
   app: {
-    // baseURL: "/smartadmin-vk-miniapp/", // замените на имя вашего репозитория!
+    baseURL: "/smartadmin-vk-miniapp/", // замените на имя вашего репозитория!
     buildAssetsDir: "assets/", // меняем _nuxt на assets, чтобы избежать проблем с Jekyll
   },
   nitro: {
