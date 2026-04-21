@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "Nunito-ExtraBold";
+  src: url(../fonts/Nunito/Nunito-ExtraBold.ttf);
+}
+
+@font-face {
+  font-family: "Nunito-Bold";
+  src: url(../fonts/Nunito/Nunito-Bold.ttf);
+}
+
+@font-face {
+  font-family: "Nunito-Medium";
+  src: url(../fonts/Nunito/Nunito-Medium.ttf);
+}
+
+@font-face {
+  font-family: "Nunito-SemiBold";
+  src: url(../fonts/Nunito/Nunito-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(../fonts/Nunito/Nunito-Calendar.ttf);
+}
+
+@font-face {
+  font-family: "Nunito-Black";
+  src: url(../fonts/Nunito/Nunito-Black.ttf);
+}
+
+html,
+body {
+  background-color: #f8f8f8;
+  /* scrollbar-gutter: stable; */
+}
+
+.text-calendar {
+  font-family: "Nunito-Black";
+  font-size: 24px;
+}
