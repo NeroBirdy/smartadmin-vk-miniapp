@@ -20,6 +20,7 @@
 <style scoped>
 .preloader-wrapper {
   display: flex;
+  position: absolute;
   justify-content: center;
 }
 .preloader {

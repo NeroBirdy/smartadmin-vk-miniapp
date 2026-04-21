@@ -88,7 +88,7 @@ const getTime = (date: string) => {
   height: 800px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .lessons-content {
@@ -155,12 +155,18 @@ const getTime = (date: string) => {
   }
 }
 
+.loader-wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 95%;
-  /* margin: 0 30px; */
   padding-top: 15px;
   padding-bottom: 30px;
 }
