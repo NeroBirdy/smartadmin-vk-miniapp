@@ -1,19 +1,20 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
-  app: {
-    baseURL: '/smartadmin-vk-miniapp/', // замените на имя вашего репозитория!
-    buildAssetsDir: 'assets/', // меняем _nuxt на assets, чтобы избежать проблем с Jekyll
-  },
+import svgLoader from "vite-svg-loader";
 
-  ssr: false, // важно для статического сайта
-  
-  devtools: { enabled: true },
-  
-  // Убедитесь, что используется правильная директория для генерации
+export default defineNuxtConfig({
+  // app: {
+  //   baseURL: "/smartadmin-vk-miniapp/", // замените на имя вашего репозитория!
+  //   buildAssetsDir: "assets/", // меняем _nuxt на assets, чтобы избежать проблем с Jekyll
+  // },
   nitro: {
     output: {
-      dir: '.output',
-      publicDir: '.output/public'
-    }
-  }
-})
+      dir: ".output",
+      publicDir: ".output/public",
+    },
+  },
+  css: ["~/assets/css/main.css"],
+  compatibilityDate: "2025-07-15",
+  devtools: { enabled: true },
+  vite: {
+    plugins: [svgLoader()],
+  },
+});

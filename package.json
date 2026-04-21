@@ -1,5 +1,5 @@
 {
-  "name": "smartadmin-vk-miniapp",
+  "name": "vkMiniApp",
   "type": "module",
   "private": true,
   "scripts": {
@@ -13,7 +13,8 @@
     "@vkontakte/vk-bridge": "^2.15.11",
     "@vkontakte/vk-miniapps-deploy": "^1.0.2",
     "date-fns": "^4.1.0",
-    "nuxt": "^4.4.2",
+    "nuxt": "^4.3.0",
+    "vite-svg-loader": "^5.1.1",
     "vue": "^3.5.32",
     "vue-router": "^5.0.4"
   }
