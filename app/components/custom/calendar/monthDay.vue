@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-month-day" :class="dayStyle">
+  <div class="calendar-month-day" :class="dayStyle" @click="console.log(fetchRR)">
     <div class="inside-calendar-month-day">
       <div class="header">
         <h1 class="text-calendar" :class="textStyle">
@@ -12,6 +12,36 @@
 
 <script lang="ts" setup>
 import { format } from "date-fns";
+import bridge from '@vkontakte/vk-bridge';
+
+const userId = ref<number | null>(null);
+
+onMounted(async () => {
+  // 1. Инициализируем бридж
+  bridge.send('VKWebAppInit');
+
+  // 2. Запрашиваем информацию о пользователе
+  try {
+    const result = await bridge.send('VKWebAppGetUserInfo');
+    userId.value = result.id; // result.id - это и есть userId
+  } catch (error) {
+    console.error('Ошибка получения UserID:', error);
+  }
+});
+
+const fetchRR = async () => {
+  if (!userId.value) {
+    console.warn('UserId еще не получен');
+    return;
+  }
+
+  return await $fetch("/api/miniapp/getLessonForUser", {
+    query: { 
+      date: date, 
+      userId: userId.value 
+    },
+  });
+};
 
 const { date, isToday, isCurrentMonth } = defineProps<{
   date: Date;

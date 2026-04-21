@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Nunito-Black";
 
-  src: url(~/assets/fonts/Nunito/Nunito-Black.ttf)
+  src: url(/assets/fonts/Nunito/Nunito-Black.ttf)
 }
 
 html,
