@@ -1,0 +1,10 @@
+{
+  "static_path": ".output/public",
+  "app_id": "54555250",
+  "site_url": "https://vk-apps.com/54555250/", 
+  "endpoints": {
+    "mobile": "",
+    "mvk": "",
+    "web": ""
+  }
+}
