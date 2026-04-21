@@ -56,12 +56,15 @@ onMounted(async () => {
 
 const fetchLessons = async () => {
   try {
-    const response = await $fetch("/api/lessons", {
-      query: {
-        date: selectedDate.value.toISOString(),
-        userId: 254516106,
+    const response = await $fetch(
+      "https://fatima-pastural-maryanna.ngrok-free.dev/api/miniapp/getLessonsForUser",
+      {
+        query: {
+          date: selectedDate.value.toISOString(),
+          userId: 254516106,
+        },
       },
-    });
+    );
     lessons.value = response;
   } catch (error) {
     console.error("Error fetching lessons:", error);
@@ -78,10 +81,10 @@ const getTime = (date: string) => {
 
 <style scoped>
 .content {
-    height: 800px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .lessons-content {
