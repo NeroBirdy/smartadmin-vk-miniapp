@@ -2,7 +2,7 @@ import svgLoader from "vite-svg-loader";
 
 export default defineNuxtConfig({
   app: {
-    baseURL: "/smartadmin-vk-miniapp/", 2
+    baseURL: "/smartadmin-vk-miniapp/",
     buildAssetsDir: "assets/", 
   },
   nitro: {
