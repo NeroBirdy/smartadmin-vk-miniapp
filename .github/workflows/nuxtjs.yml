@@ -1,4 +1,3 @@
-# Sample workflow for building and deploying a Nuxt site to GitHub Pages
 name: Deploy Nuxt site to Pages
 
 on:
@@ -44,21 +43,6 @@ jobs:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: nuxt
-          
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            .output
-            .nuxt
-          key: ${{ runner.os }}-nuxt-build-${{ hashFiles('.output') }}
-          restore-keys: |
-            ${{ runner.os }}-nuxt-build-
-            
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         
