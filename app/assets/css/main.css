@@ -1,30 +1,30 @@
 @font-face {
   font-family: "Nunito-ExtraBold";
-  src: url(/smartadmin-vk-miniapp/fonts/Nunito/Nunito-ExtraBold.ttf);
+  src: url(~/assets/fonts/Nunito/Nunito-ExtraBold.ttf);
 }
 
 @font-face {
   font-family: "Nunito-Bold";
-  src: url(/smartadmin-vk-miniapp/fonts/Nunito/Nunito-Bold.ttf);
+  src: url(~/assets/fonts/Nunito/Nunito-Bold.ttf);
 }
 @font-face {
   font-family: "Nunito-Medium";
-  src: url(/smartadmin-vk-miniapp/fonts/Nunito/Nunito-Medium.ttf);
+  src: url(~/assets/fonts/Nunito/Nunito-Medium.ttf);
 }
 
 @font-face {
   font-family: "Nunito-SemiBold";
-  src: url(/smartadmin-vk-miniapp/fonts/Nunito/Nunito-SemiBold.ttf);
+  src: url(~/assets/fonts/Nunito/Nunito-SemiBold.ttf);
 }
 
 @font-face {
   font-family: "Nunito";
-  src: url(/smartadmin-vk-miniapp/fonts/Nunito/Nunito-Calendar.ttf);
+  src: url(~/assets/fonts/Nunito/Nunito-Calendar.ttf);
 }
 
 @font-face {
   font-family: "Nunito-Black";
-  src: url(/smartadmin-vk-miniapp/fonts/Nunito/Nunito-Black.ttf);
+  src: url(~/assets/fonts/Nunito/Nunito-Black.ttf);
 }
 
 html,
