@@ -12,6 +12,7 @@
         <template v-for="(week, wIndex) in weeks" :key="wIndex">
           <CustomCalendarMonthDay
             v-for="(cell, cIndex) in week"
+            @click="handleDateClick(cell.date)"
             :key="cIndex"
             :date="cell.date"
             :isCurrentMonth="cell.isCurrentMonth"
@@ -40,6 +41,13 @@ type CalendarCell = {
   isCurrentMonth: boolean;
   isToday: boolean;
   date: Date;
+};
+
+const { setSelectedDate } = useSelectedDate();
+
+const handleDateClick = (date: Date) => {
+  setSelectedDate(date);
+  navigateTo("/day");
 };
 
 const CalendarPeriodText = computed(() => {
@@ -95,6 +103,24 @@ watch(currentDate, buildCalendarGrid);
   align-items: center;
 }
 
+@media (max-width: 600px) {
+  .text-calendar {
+    font-size: 16px !important;
+  }
+
+  .nav-header {
+    width: 200px !important;
+  }
+
+  .arrow-left {
+    scale: 0.75;
+  }
+
+  .arrow-right {
+    scale: 0.75;
+  }
+}
+
 .inside-calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -108,12 +134,13 @@ watch(currentDate, buildCalendarGrid);
 }
 
 .header-text {
-   font-size: 20px;
-   padding-left: 10px;
+  font-size: 20px;
+  padding-left: 10px;
 }
 
 .nav-header {
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
   width: 286px;

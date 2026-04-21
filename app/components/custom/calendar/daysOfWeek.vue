@@ -21,6 +21,14 @@ const daysOfWeek = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
   padding-bottom: 5px;
 }
 
+@media (max-width: 600px) {
+  .day-of-week {
+    width: 32px !important;
+    padding: 0 10px !important;
+    font-size: 16px;
+  }
+}
+
 .day-of-week {
   width: 90px;
   padding: 0 17.5px;

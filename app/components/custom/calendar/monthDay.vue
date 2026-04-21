@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-month-day" :class="dayStyle" @click="console.log(fetchRR)">
+  <div class="calendar-month-day" :class="dayStyle">
     <div class="inside-calendar-month-day">
       <div class="header">
         <h1 class="text-calendar" :class="textStyle">
@@ -12,36 +12,6 @@
 
 <script lang="ts" setup>
 import { format } from "date-fns";
-import bridge from '@vkontakte/vk-bridge';
-
-const userId = ref<number | null>(null);
-
-onMounted(async () => {
-  // 1. Инициализируем бридж
-  bridge.send('VKWebAppInit');
-
-  // 2. Запрашиваем информацию о пользователе
-  try {
-    const result = await bridge.send('VKWebAppGetUserInfo');
-    userId.value = result.id; // result.id - это и есть userId
-  } catch (error) {
-    console.error('Ошибка получения UserID:', error);
-  }
-});
-
-const fetchRR = async () => {
-  if (!userId.value) {
-    console.warn('UserId еще не получен');
-    return;
-  }
-
-  return await $fetch("/api/miniapp/getLessonForUser", {
-    query: { 
-      date: date, 
-      userId: userId.value 
-    },
-  });
-};
 
 const { date, isToday, isCurrentMonth } = defineProps<{
   date: Date;
@@ -73,6 +43,35 @@ const dateText = computed(() => {
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 6px 32px 2px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 600px) {
+  .calendar-month-day {
+    height: 32px;
+    width: 32px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
+
+  .text-calendar {
+    font-size: 15px;
+  }
+
+  .inside-calendar-month-day {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header {
+    padding: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .calendar-month-day.today {
