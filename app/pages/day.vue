@@ -59,6 +59,10 @@ const fetchLessons = async () => {
     const response = await $fetch(
       "https://fatima-pastural-maryanna.ngrok-free.dev/api/miniapp/getLessonsForUser",
       {
+        method: "GET",
+        headers: {
+          "ngrok-skip-browser-warning": "1",
+        },
         query: {
           date: selectedDate.value.toISOString(),
           userId: 254516106,
