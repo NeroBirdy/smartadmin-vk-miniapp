@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     baseURL: "/smartadmin-vk-miniapp/",
     buildAssetsDir: "assets/", 
   },
+
   nitro: {
     output: {
       dir: ".output",

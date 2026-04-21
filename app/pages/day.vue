@@ -47,7 +47,7 @@ import { toZonedTime } from "date-fns-tz";
 import backIcon from "~/assets/icons/circle-arrow-left.svg";
 
 const isLoading = ref(true);
-const lessons = ref();
+const lessons = ref([]);
 const { selectedDate } = useSelectedDate();
 
 onMounted(async () => {
@@ -56,21 +56,15 @@ onMounted(async () => {
 
 const fetchLessons = async () => {
   try {
-    const response = await $fetch(
-      "http://localhost:3000/api/miniapp/getLessonsForUser",
-      {
-        query: {
-          date: selectedDate.value.toISOString(),
-          userId: 254516106,
-        },
+    const response = await $fetch("/api/lessons", {
+      query: {
+        date: selectedDate.value.toISOString(),
+        userId: 254516106,
       },
-    );
+    });
     lessons.value = response;
-    console.log(response);
   } catch (error) {
     console.error("Error fetching lessons:", error);
-    // Используем моковые данные в случае ошибки
-    // lessons.value = mockLessons;
   } finally {
     isLoading.value = false;
   }
@@ -83,6 +77,13 @@ const getTime = (date: string) => {
 </script>
 
 <style scoped>
+.content {
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .lessons-content {
   display: flex;
   flex-direction: column;
