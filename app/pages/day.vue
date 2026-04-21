@@ -95,6 +95,7 @@ const getTime = (date: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .list {
