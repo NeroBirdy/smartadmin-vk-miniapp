@@ -58,9 +58,9 @@ onMounted(async () => {
 const fetchLessons = async () => {
   try {
     let userId;
-    bridge.send("VKWebAppGetUserInfo").then((data) => {
-      userId = data.id; 
-    });
+    const data = await bridge.send("VKWebAppGetUserInfo");
+    userId = data.id;
+    
     const response = await $fetch(
       "https://fatima-pastural-maryanna.ngrok-free.dev/api/miniapp/getLessonsForUser",
       {
