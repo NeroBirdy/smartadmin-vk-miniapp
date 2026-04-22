@@ -93,7 +93,7 @@ const confirmationText = ref("");
 const userId = ref();
 
 const lessonStyle = computed(() => ({
-  change: currentState.value != "",
+  change: currentState.value != "isLogined",
 }));
 
 onMounted(async () => {
