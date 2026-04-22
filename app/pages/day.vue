@@ -204,11 +204,7 @@ const confirmHandler = async () => {
 };
 
 const deleteLesson = () => {
-  isLoading.value = true;
-  Promise.all([
-    new Promise((resolve) => setTimeout(resolve, 500)),
-    fetchLessons(), 
-  ]);
+  // Отправляем запрос БЕЗ await
   $fetch(
     "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/deleteLesson",
     {
@@ -220,10 +216,11 @@ const deleteLesson = () => {
         lessonId: selectedLesson.value,
         userId: userId.value
       },
+      keepalive: true
     },
-  );
+  ).catch(err => console.error("Delete failed:", err));
 
-  // bridge.send("VKWebAppClose", { status: "success" });
+  bridge.send("VKWebAppClose", { status: "success" });
 };
 </script>
 
