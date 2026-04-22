@@ -223,7 +223,7 @@ const deleteLesson = () => {
     },
   );
 
-  bridge.send("VKWebAppClose", { status: "success" });
+  // bridge.send("VKWebAppClose", { status: "success" });
 };
 </script>
 
