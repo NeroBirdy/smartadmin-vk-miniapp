@@ -45,6 +45,7 @@
 import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import backIcon from "~/assets/icons/circle-arrow-left.svg";
+import bridge from "@vkontakte/vk-bridge";
 
 const isLoading = ref(true);
 const lessons = ref([]);
@@ -56,6 +57,9 @@ onMounted(async () => {
 
 const fetchLessons = async () => {
   try {
+    bridge.send("VKWebAppGetUserInfo").then((data) => {
+      console.log(data) 
+    });
     const response = await $fetch(
       "https://fatima-pastural-maryanna.ngrok-free.dev/api/miniapp/getLessonsForUser",
       {
