@@ -193,6 +193,7 @@ const confirmHandler = async () => {
       deleteLesson();
       break;
     case "changeVenue":
+      changeVenue();
       break;
     case "changeInstructor":
       break;
@@ -204,7 +205,6 @@ const confirmHandler = async () => {
 };
 
 const deleteLesson = () => {
-  // Отправляем запрос БЕЗ await
   $fetch(
     "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/deleteLesson",
     {
@@ -219,6 +219,25 @@ const deleteLesson = () => {
       keepalive: true
     },
   ).catch(err => console.error("Delete failed:", err));
+
+  bridge.send("VKWebAppClose", { status: "success" });
+};
+
+const changeVenue = () => {
+  $fetch(
+    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getAdditionalVenues",
+    {
+      method: "POST",
+      headers: {
+        "ngrok-skip-browser-warning": "1",
+      },
+      body: {
+        lessonId: selectedLesson.value,
+        userId: userId.value
+      },
+      keepalive: true
+    },
+  ).catch(err => console.error("Change Venue failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
