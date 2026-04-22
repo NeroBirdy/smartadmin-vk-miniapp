@@ -47,8 +47,22 @@ import { toZonedTime } from "date-fns-tz";
 import backIcon from "~/assets/icons/circle-arrow-left.svg";
 import bridge from "@vkontakte/vk-bridge";
 
+type Lesson = {
+  id: number;
+  startTime: string;
+  endTime: string;
+  group: {
+    id: number;
+    name: string;
+  };
+  venue: {
+    id: number;
+    name: string;
+  };
+};
+
 const isLoading = ref(true);
-const lessons = ref([]);
+const lessons = ref<Lesson[]>([]);
 const { selectedDate } = useSelectedDate();
 
 onMounted(async () => {
@@ -57,11 +71,9 @@ onMounted(async () => {
 
 const fetchLessons = async () => {
   try {
-    let userId;
-    const data = await bridge.send("VKWebAppGetUserInfo");
-    userId = data.id;
-    
-    const response = await $fetch(
+    const { id: userId } = await bridge.send("VKWebAppGetUserInfo");
+
+    const response = await $fetch<Lesson[]>(
       "https://fatima-pastural-maryanna.ngrok-free.dev/api/miniapp/getLessonsForUser",
       {
         method: "GET",
@@ -70,7 +82,7 @@ const fetchLessons = async () => {
         },
         query: {
           date: selectedDate.value.toISOString(),
-          userId: userId,
+          userId,
         },
       },
     );
@@ -93,7 +105,7 @@ const getTime = (date: string) => {
   height: 800px;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+  position: relative; /* Добавлено */
 }
 
 .lessons-content {
@@ -162,10 +174,14 @@ const getTime = (date: string) => {
 }
 
 .loader-wrapper {
-  position: relative;
-  height: 100%;
+  position: absolute; /* Изменено с relative */
+  top: 50%; /* Добавлено */
+  left: 50%; /* Добавлено */
+  transform: translate(-50%, -50%); /* Добавлено */
   display: flex;
   align-items: center;
+  justify-content: center;
+  z-index: 10; /* Добавлено */
 }
 
 .header {
@@ -216,7 +232,7 @@ p {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease; /* Увеличено время с 0.3s до 0.5s */
 }
 
 .fade-enter-from,
