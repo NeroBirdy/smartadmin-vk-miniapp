@@ -5,7 +5,7 @@
         <ui-loader />
       </div>
     </Transition>
-    <transition name="fade">
+    <Transition name="fade">
       <div v-if="!isLoading" class="lessons-content">
         <div class="header">
           <div class="backBtn">
@@ -22,7 +22,11 @@
         </div>
         <div class="list" v-if="lessons.length">
           <template v-for="lesson in lessons" :key="lesson.id">
-            <div class="lesson">
+            <div
+              class="lesson"
+              :class="lessonStyle"
+              @click="onClickHandler(lesson.id)"
+            >
               <div class="time">
                 <p class="text-calendar text-time">
                   {{ getTime(lesson.startTime) }}
@@ -37,8 +41,24 @@
         </div>
         <p class="text-calendar title" v-else>Уроков нет</p>
       </div>
-    </transition>
+    </Transition>
   </div>
+  <Transition name="fade">
+    <div
+      class="confirm-overlay"
+      v-if="isConfirmOpen"
+      @click.stop="onCloseHandler()"
+    />
+  </Transition>
+  <Transition name="confirm">
+    <div v-if="isConfirmOpen" class="confirm-wrapper">
+      <CustomCalendarConfirm
+        :text="confirmationText"
+        @close="onCloseHandler()"
+        @confirm="confirmHandler()"
+      />
+    </div>
+  </Transition>
 </template>
 
 <script lang="ts" setup>
@@ -65,14 +85,52 @@ const isLoading = ref(true);
 const lessons = ref<Lesson[]>([]);
 const { selectedDate } = useSelectedDate();
 
+const selectedLesson = ref();
+const currentState = ref("");
+const isConfirmOpen = ref(false);
+const confirmationText = ref("");
+
+const userId = ref();
+
+const lessonStyle = computed(() => ({
+  change: currentState.value != "",
+}));
+
 onMounted(async () => {
+  await getUserId();
+  await getUserState();
   await fetchLessons();
 });
 
+const getUserId = async () => {
+  const data = await bridge.send("VKWebAppGetUserInfo");
+  userId.value = data.id;
+  // userId.value = 254516106;
+};
+
+const getUserState = async () => {
+  try {
+    const response = await $fetch<{ state: string }>(
+      "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getUserState",
+      {
+        method: "GET",
+        headers: {
+          "ngrok-skip-browser-warning": "1",
+        },
+        query: {
+          userId: userId.value,
+        },
+      },
+    );
+    currentState.value = response.state;
+    console.log(response);
+  } catch (error) {
+    console.error("Error fetching user state:", error);
+  }
+};
+
 const fetchLessons = async () => {
   try {
-    const { id: userId } = await bridge.send("VKWebAppGetUserInfo");
-
     const response = await $fetch<Lesson[]>(
       "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getLessonsForUser",
       {
@@ -82,7 +140,7 @@ const fetchLessons = async () => {
         },
         query: {
           date: selectedDate.value.toISOString(),
-          userId,
+          userId: userId.value,
         },
       },
     );
@@ -98,6 +156,74 @@ const getTime = (date: string) => {
   const newDate = toZonedTime(new Date(date), "UTC");
   return format(newDate, "HH:mm");
 };
+
+const onClickHandler = (lessonId: number) => {
+  const state = currentState.value;
+  switch (state) {
+    case "cancellationLesson":
+      confirmationText.value = "Вы уверены, что хотите удалить урок?";
+      break;
+    case "changeVenue":
+      confirmationText.value = "Вы уверены, что хотите поменять помещение?";
+      break;
+    case "changeInstructor":
+      confirmationText.value = "Вы уверены, что хотите поменять инструктора?";
+      break;
+    case "changeDate":
+      confirmationText.value =
+        "Вы уверены, что хотите поменять дату провердения занятия?";
+      break;
+    default:
+      return;
+  }
+  selectedLesson.value = lessonId;
+  isConfirmOpen.value = true;
+  console.log(confirmationText.value);
+};
+
+const onCloseHandler = () => {
+  isConfirmOpen.value = false;
+  selectedLesson.value = null;
+};
+
+const confirmHandler = async () => {
+  const state = currentState.value;
+  switch (state) {
+    case "cancellationLesson":
+      deleteLesson();
+      break;
+    case "changeVenue":
+      break;
+    case "changeInstructor":
+      break;
+    case "changeDate":
+      break;
+    default:
+      return;
+  }
+};
+
+const deleteLesson = () => {
+  isLoading.value = true;
+  Promise.all([
+    new Promise((resolve) => setTimeout(resolve, 500)),
+    fetchLessons(), 
+  ]);
+  $fetch(
+    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/deleteLesson",
+    {
+      method: "DELETE",
+      headers: {
+        "ngrok-skip-browser-warning": "1",
+      },
+      body: {
+        lessonId: selectedLesson.value,
+      },
+    },
+  );
+
+  bridge.send("VKWebAppClose", { status: "success" });
+};
 </script>
 
 <style scoped>
@@ -105,7 +231,7 @@ const getTime = (date: string) => {
   height: 800px;
   display: flex;
   justify-content: center;
-  position: relative; /* Добавлено */
+  position: relative;
 }
 
 .lessons-content {
@@ -133,6 +259,11 @@ const getTime = (date: string) => {
   height: 85px;
   margin-bottom: 13.25px;
   box-shadow: 0 6px 32px 2px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.2s ease;
+}
+
+.lesson.change:hover {
+  background-color: rgb(218, 218, 218);
 }
 
 .back-icon {
@@ -174,14 +305,14 @@ const getTime = (date: string) => {
 }
 
 .loader-wrapper {
-  position: absolute; /* Изменено с relative */
-  top: 50%; /* Добавлено */
-  left: 50%; /* Добавлено */
-  transform: translate(-50%, -50%); /* Добавлено */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10; /* Добавлено */
+  z-index: 10;
 }
 
 .header {
@@ -232,11 +363,48 @@ p {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease; /* Увеличено время с 0.3s до 0.5s */
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.confirm-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  /* border-radius: 25px; */
+}
+
+.confirm-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.confirm-enter-active,
+.confirm-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.confirm-enter-from,
+.confirm-leave-to {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+.confirm-enter-to,
+.confirm-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>
