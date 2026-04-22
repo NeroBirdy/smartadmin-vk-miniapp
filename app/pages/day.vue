@@ -218,6 +218,7 @@ const deleteLesson = () => {
       },
       body: {
         lessonId: selectedLesson.value,
+        userId: userId.value
       },
     },
   );
