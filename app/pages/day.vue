@@ -198,6 +198,7 @@ const confirmHandler = async () => {
     case "changeInstructor":
       break;
     case "changeDate":
+      changeDate();
       break;
     default:
       return;
@@ -214,11 +215,11 @@ const deleteLesson = () => {
       },
       body: {
         lessonId: selectedLesson.value,
-        userId: userId.value
+        userId: userId.value,
       },
-      keepalive: true
+      keepalive: true,
     },
-  ).catch(err => console.error("Delete failed:", err));
+  ).catch((err) => console.error("Delete failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
@@ -233,11 +234,30 @@ const changeVenue = () => {
       },
       body: {
         lessonId: selectedLesson.value,
-        userId: userId.value
+        userId: userId.value,
       },
-      keepalive: true
+      keepalive: true,
     },
-  ).catch(err => console.error("Change Venue failed:", err));
+  ).catch((err) => console.error("Change Venue failed:", err));
+
+  bridge.send("VKWebAppClose", { status: "success" });
+};
+
+const changeDate = () => {
+  $fetch(
+    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/generateNewDateForLesson",
+    {
+      method: "POST",
+      headers: {
+        "ngrok-skip-browser-warning": "1",
+      },
+      body: {
+        lessonId: selectedLesson.value,
+        userId: userId.value,
+      },
+      keepalive: true,
+    },
+  ).catch((err) => console.error("Change Date failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
