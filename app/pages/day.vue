@@ -190,6 +190,7 @@ const confirmHandler = async () => {
       changeVenue();
       break;
     case "changeInstructor":
+      changeInstructor();
       break;
     case "changeDate":
       changeDate();
@@ -242,9 +243,6 @@ const changeDate = () => {
     "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/generateNewDateForLesson",
     {
       method: "POST",
-      headers: {
-        "ngrok-skip-browser-warning": "1",
-      },
       body: {
         lessonId: selectedLesson.value,
         userId: userId.value,
@@ -252,6 +250,22 @@ const changeDate = () => {
       keepalive: true,
     },
   ).catch((err) => console.error("Change Date failed:", err));
+
+  bridge.send("VKWebAppClose", { status: "success" });
+};
+
+const changeInstructor = () => {
+  $fetch(
+    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/sendConfirmMessage",
+    {
+      method: "GET",
+      body: {
+        lessonId: selectedLesson.value,
+        userId: userId.value,
+      },
+      keepalive: true,
+    },
+  ).catch((err) => console.error("Change Instructor failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
