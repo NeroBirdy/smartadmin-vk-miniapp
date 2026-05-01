@@ -190,6 +190,7 @@ const confirmHandler = async () => {
       changeVenue();
       break;
     case "changeInstructor":
+    console.log("changeInstructor")
       changeInstructor();
       break;
     case "changeDate":
