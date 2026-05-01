@@ -103,9 +103,9 @@ onMounted(async () => {
 });
 
 const getUserId = async () => {
-  // const data = await bridge.send("VKWebAppGetUserInfo");
-  // userId.value = data.id;
-  userId.value = 254516106;
+  const data = await bridge.send("VKWebAppGetUserInfo");
+  userId.value = data.id;
+  // userId.value = 254516106;
 };
 
 const getUserState = async () => {
