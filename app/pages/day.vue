@@ -181,7 +181,9 @@ const onCloseHandler = () => {
 };
 
 const confirmHandler = async () => {
+  isConfirmOpen.value = false;
   const state = currentState.value;
+  
   switch (state) {
     case "cancellationLesson":
       deleteLesson();
