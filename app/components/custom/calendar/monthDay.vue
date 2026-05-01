@@ -97,7 +97,7 @@ const dateText = computed(() => {
 }
 
 .text-calendar.today {
-  color: white;
+  color: white !important;
 }
 
 .text-calendar.currentMonth {

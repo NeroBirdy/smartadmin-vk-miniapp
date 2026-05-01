@@ -3,9 +3,9 @@ import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
   app: {
     baseURL: "/smartadmin-vk-miniapp/",
-    buildAssetsDir: "assets/", 
+    buildAssetsDir: "assets/",
   },
-
+  ssr: false,
   nitro: {
     output: {
       dir: ".output",

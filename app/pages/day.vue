@@ -103,9 +103,9 @@ onMounted(async () => {
 });
 
 const getUserId = async () => {
-  const data = await bridge.send("VKWebAppGetUserInfo");
-  userId.value = data.id;
-  // userId.value = 254516106;
+  // const data = await bridge.send("VKWebAppGetUserInfo");
+  // userId.value = data.id;
+  userId.value = 254516106;
 };
 
 const getUserState = async () => {
@@ -114,9 +114,6 @@ const getUserState = async () => {
       "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getUserState",
       {
         method: "GET",
-        headers: {
-          "ngrok-skip-browser-warning": "1",
-        },
         query: {
           userId: userId.value,
         },
@@ -135,9 +132,6 @@ const fetchLessons = async () => {
       "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getLessonsForUser",
       {
         method: "GET",
-        headers: {
-          "ngrok-skip-browser-warning": "1",
-        },
         query: {
           date: selectedDate.value.toISOString(),
           userId: userId.value,
