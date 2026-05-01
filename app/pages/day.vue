@@ -183,7 +183,7 @@ const onCloseHandler = () => {
 const confirmHandler = async () => {
   isConfirmOpen.value = false;
   const state = currentState.value;
-  
+
   switch (state) {
     case "cancellationLesson":
       deleteLesson();
@@ -192,7 +192,6 @@ const confirmHandler = async () => {
       changeVenue();
       break;
     case "changeInstructor":
-    console.log("changeInstructor")
       changeInstructor();
       break;
     case "changeDate":
@@ -227,9 +226,6 @@ const changeVenue = () => {
     "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getAdditionalVenues",
     {
       method: "POST",
-      headers: {
-        "ngrok-skip-browser-warning": "1",
-      },
       body: {
         lessonId: selectedLesson.value,
         userId: userId.value,
@@ -261,8 +257,8 @@ const changeInstructor = () => {
   $fetch(
     "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/sendConfirmMessage",
     {
-      method: "GET",
-      query: {
+      method: "POST",
+      body: {
         lessonId: selectedLesson.value,
         userId: userId.value,
       },
