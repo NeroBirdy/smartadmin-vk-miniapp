@@ -43,7 +43,7 @@ type CalendarCell = {
   date: Date;
 };
 
-const { setSelectedDate } = useSelectedDate();
+const { setSelectedDate, currentDate } = useSelectedDate();
 
 const handleDateClick = (date: Date) => {
   setSelectedDate(date);
@@ -62,8 +62,6 @@ function nextPeriod() {
 function previousPeriod() {
   currentDate.value = subMonths(currentDate.value, 1);
 }
-
-const currentDate = ref(new Date());
 
 const weeks = ref<CalendarCell[][]>([]);
 
