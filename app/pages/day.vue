@@ -207,7 +207,7 @@ const deleteLesson = () => {
     "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/deleteLesson",
     {
       method: "POST",
-      query: {
+      body: {
         lessonId: selectedLesson.value,
         userId: userId.value,
       },
