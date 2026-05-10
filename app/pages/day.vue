@@ -206,11 +206,8 @@ const deleteLesson = () => {
   $fetch(
     "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/deleteLesson",
     {
-      method: "DELETE",
-      headers: {
-        "ngrok-skip-browser-warning": "1",
-      },
-      body: {
+      method: "GET",
+      query: {
         lessonId: selectedLesson.value,
         userId: userId.value,
       },
