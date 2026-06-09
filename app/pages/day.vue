@@ -129,7 +129,7 @@ const getUserState = async () => {
 const fetchLessons = async () => {
   try {
     const response = await $fetch<Lesson[]>(
-      "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getLessonsForUser",
+      "https://c92bce76-635c-44ff-90cc-c4bc4304e8e9.tunnel4.com/api/miniapp/getLessonsForUser",
       {
         method: "GET",
         query: {
@@ -167,6 +167,10 @@ const onClickHandler = (lessonId: number) => {
       confirmationText.value =
         "Вы уверены, что хотите поменять дату провердения занятия?";
       break;
+    case "requestChangeDate":
+      confirmationText.value =
+        "Вы уверены, что хотите поменять дату провердения занятия?";
+      break;
     default:
       return;
   }
@@ -197,6 +201,9 @@ const confirmHandler = async () => {
     case "changeDate":
       changeDate();
       break;
+    case "requestChangeDate":
+      changeDate();
+      break;
     default:
       return;
   }
@@ -204,7 +211,7 @@ const confirmHandler = async () => {
 
 const deleteLesson = () => {
   $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/deleteLesson",
+    "https://c92bce76-635c-44ff-90cc-c4bc4304e8e9.tunnel4.com/api/miniapp/deleteLesson",
     {
       method: "POST",
       body: {
@@ -220,7 +227,7 @@ const deleteLesson = () => {
 
 const changeVenue = () => {
   $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getAdditionalVenues",
+    "https://c92bce76-635c-44ff-90cc-c4bc4304e8e9.tunnel4.com/api/miniapp/getAdditionalVenues",
     {
       method: "POST",
       body: {
@@ -236,7 +243,7 @@ const changeVenue = () => {
 
 const changeDate = () => {
   $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/generateNewDateForLesson",
+    "https://c92bce76-635c-44ff-90cc-c4bc4304e8e9.tunnel4.com/api/miniapp/generateNewDateForLesson",
     {
       method: "POST",
       body: {
@@ -252,7 +259,7 @@ const changeDate = () => {
 
 const changeInstructor = () => {
   $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/sendConfirmMessage",
+    "https://c92bce76-635c-44ff-90cc-c4bc4304e8e9.tunnel4.com/api/miniapp/sendConfirmMessage",
     {
       method: "POST",
       body: {
