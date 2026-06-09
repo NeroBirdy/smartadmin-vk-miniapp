@@ -111,7 +111,7 @@ const getUserId = async () => {
 const getUserState = async () => {
   try {
     const response = await $fetch<{ state: string }>(
-      "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getUserState",
+      "https://c92bce76-635c-44ff-90cc-c4bc4304e8e9.tunnel4.com/api/miniapp/getUserState",
       {
         method: "GET",
         query: {
