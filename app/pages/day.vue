@@ -81,6 +81,8 @@ type Lesson = {
   };
 };
 
+const link = "https://df303ec3-e96e-4db2-a7b0-513bfd6194a3.tunnel4.com";
+
 const isLoading = ref(true);
 const lessons = ref<Lesson[]>([]);
 const { selectedDate } = useSelectedDate();
@@ -111,7 +113,7 @@ const getUserId = async () => {
 const getUserState = async () => {
   try {
     const response = await $fetch<{ state: string }>(
-      "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getUserState",
+      `${link}/api/miniapp/getUserState`,
       {
         method: "GET",
         query: {
@@ -129,7 +131,7 @@ const getUserState = async () => {
 const fetchLessons = async () => {
   try {
     const response = await $fetch<Lesson[]>(
-      "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getLessonsForUser",
+      `${link}/api/miniapp/getLessonsForUser`,
       {
         method: "GET",
         query: {
@@ -203,65 +205,53 @@ const confirmHandler = async () => {
 };
 
 const deleteLesson = () => {
-  $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/deleteLesson",
-    {
-      method: "POST",
-      body: {
-        lessonId: selectedLesson.value,
-        userId: userId.value,
-      },
-      keepalive: true,
+  $fetch(`${link}/api/miniapp/deleteLesson`, {
+    method: "POST",
+    body: {
+      lessonId: selectedLesson.value,
+      userId: userId.value,
     },
-  ).catch((err) => console.error("Delete failed:", err));
+    keepalive: true,
+  }).catch((err) => console.error("Delete failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
 
 const changeVenue = () => {
-  $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/getAdditionalVenues",
-    {
-      method: "POST",
-      body: {
-        lessonId: selectedLesson.value,
-        userId: userId.value,
-      },
-      keepalive: true,
+  $fetch(`${link}/api/miniapp/getAdditionalVenues`, {
+    method: "POST",
+    body: {
+      lessonId: selectedLesson.value,
+      userId: userId.value,
     },
-  ).catch((err) => console.error("Change Venue failed:", err));
+    keepalive: true,
+  }).catch((err) => console.error("Change Venue failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
 
 const changeDate = () => {
-  $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/generateNewDateForLesson",
-    {
-      method: "POST",
-      body: {
-        lessonId: selectedLesson.value,
-        userId: userId.value,
-      },
-      keepalive: true,
+  $fetch(`${link}/api/miniapp/generateNewDateForLesson`, {
+    method: "POST",
+    body: {
+      lessonId: selectedLesson.value,
+      userId: userId.value,
     },
-  ).catch((err) => console.error("Change Date failed:", err));
+    keepalive: true,
+  }).catch((err) => console.error("Change Date failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
 
 const changeInstructor = () => {
-  $fetch(
-    "https://e421059c-bd25-42d6-bdf4-4f0d21f32b75.tunnel4.com/api/miniapp/sendConfirmMessage",
-    {
-      method: "POST",
-      body: {
-        lessonId: selectedLesson.value,
-        userId: userId.value,
-      },
-      keepalive: true,
+  $fetch(`${link}/api/miniapp/sendConfirmMessage`, {
+    method: "POST",
+    body: {
+      lessonId: selectedLesson.value,
+      userId: userId.value,
     },
-  ).catch((err) => console.error("Change Instructor failed:", err));
+    keepalive: true,
+  }).catch((err) => console.error("Change Instructor failed:", err));
 
   bridge.send("VKWebAppClose", { status: "success" });
 };
