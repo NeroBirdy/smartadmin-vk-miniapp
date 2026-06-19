@@ -81,7 +81,7 @@ type Lesson = {
   };
 };
 
-const link = "https://df303ec3-e96e-4db2-a7b0-513bfd6194a3.tunnel4.com";
+const link = "https://37b9a12d-fe89-4137-9003-c86edcd9a8ee.tunnel4.com";
 
 const isLoading = ref(true);
 const lessons = ref<Lesson[]>([]);
