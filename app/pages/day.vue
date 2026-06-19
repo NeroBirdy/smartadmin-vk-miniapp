@@ -173,6 +173,9 @@ const onClickHandler = (lessonId: number) => {
       confirmationText.value =
         "Вы уверены, что хотите поменять дату провердения занятия?";
       break;
+    case "requestChangeVenue":
+      confirmationText.value = "Вы уверены, что хотите поменять помещение?";
+      break;
     default:
       return;
   }
@@ -205,6 +208,9 @@ const confirmHandler = async () => {
       break;
     case "requestChangeDate":
       changeDate();
+      break;
+    case "requestChangeVenue":
+      changeVenue();
       break;
     default:
       return;
